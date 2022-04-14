@@ -8,7 +8,7 @@ export const GitHubContext = createContext({
   starred: []
 });
 
-const GitHbProvider = ({children}) => {
+const GitHubProvider = ({children}) => {
   const [githubState, setGithubState] = useState({
     hasUser: false,
     loading: false,
@@ -34,13 +34,14 @@ const GitHbProvider = ({children}) => {
     setGithubState((prevState) => ({
       ...prevState,
       loading: !prevState.loading,
+      hasUser: false
     }));
 
     api.get(`/users/${username}`)
       .then(({data}) => {
         setGithubState((prevState) => ({
           ...prevState,
-          loading: !prevState.loading,
+          hasUser: true,
           user: {
             id: data.id,
             avatar: data.avatar_url,
@@ -68,7 +69,6 @@ const GitHbProvider = ({children}) => {
   const getUserRepo = (username) => {
     api.get(`/users/${username}/repos`)
       .then(({data}) => {
-        console.log("data: " + JSON.stringify(data));
         setGithubState((prevState) => ({
           ...prevState,
           repositories: data,
@@ -90,7 +90,7 @@ const GitHbProvider = ({children}) => {
   const contextValue = {
     githubState,
     getUser: useCallback((username) =>  getUser(username), []),
-    getUserRepo: useCallback((username) =>  getUserRepo(username), []),
+    getUserRepos: useCallback((username) =>  getUserRepo(username), []),
     getUserStarred: useCallback((username) =>  getUserStarred(username), []),
   }
 
@@ -101,4 +101,4 @@ const GitHbProvider = ({children}) => {
   );
 };
 
-export default GitHbProvider;
+export default GitHubProvider;

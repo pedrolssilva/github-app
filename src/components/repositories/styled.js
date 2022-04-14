@@ -27,7 +27,6 @@ export const WrapperTab = styled(Tab)`
 
   &:focus{
     outline: none;
-    /* box-shadow: 5 5 8 1em #ccc; */
   }
 
   &.is-selected{
@@ -49,3 +48,9 @@ export const WrapperTabPanel = styled(TabPanel)`
     }
 `;
 WrapperTabList.TabsRole = 'TabPanel';
+
+export const WrapperList = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+`;
